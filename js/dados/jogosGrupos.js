@@ -42,7 +42,7 @@ export const JOGOS_GRUPOS = [
   { id: 'E1', grupo: 'E', rodada: 1, data: '14/06', cidade: 'Houston', casa: 'de', fora: 'cw', golsCasa: 7, golsFora: 1 },
   { id: 'E2', grupo: 'E', rodada: 1, data: '14/06', cidade: 'Atlanta', casa: 'ci', fora: 'ec', golsCasa: 1, golsFora: 0 },
   { id: 'E3', grupo: 'E', rodada: 2, data: '20/06', cidade: 'Toronto', casa: 'de', fora: 'ci', golsCasa: 2, golsFora: 1 },
-  { id: 'E4', grupo: 'E', rodada: 2, data: '20/06', cidade: 'Kansas City', casa: 'ec', fora: 'cw', golsCasa: null, golsFora: null },
+  { id: 'E4', grupo: 'E', rodada: 2, data: '20/06', cidade: 'Kansas City', casa: 'ec', fora: 'cw', golsCasa: 0, golsFora: 0 },
   { id: 'E5', grupo: 'E', rodada: 3, data: '25/06', cidade: 'Philadelphia', casa: 'cw', fora: 'ci', golsCasa: null, golsFora: null },
   { id: 'E6', grupo: 'E', rodada: 3, data: '25/06', cidade: 'East Rutherford', casa: 'ec', fora: 'de', golsCasa: null, golsFora: null },
 
@@ -50,14 +50,14 @@ export const JOGOS_GRUPOS = [
   { id: 'F1', grupo: 'F', rodada: 1, data: '14/06', cidade: 'Seattle', casa: 'nl', fora: 'jp', golsCasa: 2, golsFora: 2 },
   { id: 'F2', grupo: 'F', rodada: 1, data: '14/06', cidade: 'Dallas', casa: 'se', fora: 'tn', golsCasa: 5, golsFora: 1 },
   { id: 'F3', grupo: 'F', rodada: 2, data: '20/06', cidade: 'Houston', casa: 'nl', fora: 'se', golsCasa: 5, golsFora: 1 },
-  { id: 'F4', grupo: 'F', rodada: 2, data: '20/06', cidade: 'Monterrey', casa: 'tn', fora: 'jp', golsCasa: null, golsFora: null },
+  { id: 'F4', grupo: 'F', rodada: 2, data: '20/06', cidade: 'Monterrey', casa: 'tn', fora: 'jp', golsCasa: 0, golsFora: 4 },
   { id: 'F5', grupo: 'F', rodada: 3, data: '25/06', cidade: 'Arlington', casa: 'jp', fora: 'se', golsCasa: null, golsFora: null },
   { id: 'F6', grupo: 'F', rodada: 3, data: '25/06', cidade: 'Kansas City', casa: 'tn', fora: 'nl', golsCasa: null, golsFora: null },
 
   // Grupo G
   { id: 'G1', grupo: 'G', rodada: 1, data: '15/06', cidade: 'Atlanta', casa: 'be', fora: 'eg', golsCasa: 1, golsFora: 1 },
   { id: 'G2', grupo: 'G', rodada: 1, data: '15/06', cidade: 'Vancouver', casa: 'ir', fora: 'nz', golsCasa: 2, golsFora: 2 },
-  { id: 'G3', grupo: 'G', rodada: 2, data: '21/06', cidade: 'Inglewood', casa: 'be', fora: 'ir', golsCasa: null, golsFora: null },
+  { id: 'G3', grupo: 'G', rodada: 2, data: '21/06', cidade: 'Inglewood', casa: 'be', fora: 'ir', golsCasa: 0, golsFora: 0 },
   { id: 'G4', grupo: 'G', rodada: 2, data: '21/06', cidade: 'Vancouver', casa: 'nz', fora: 'eg', golsCasa: null, golsFora: null },
   { id: 'G5', grupo: 'G', rodada: 3, data: '26/06', cidade: 'Seattle', casa: 'eg', fora: 'ir', golsCasa: null, golsFora: null },
   { id: 'G6', grupo: 'G', rodada: 3, data: '26/06', cidade: 'Vancouver', casa: 'nz', fora: 'be', golsCasa: null, golsFora: null },
@@ -65,8 +65,8 @@ export const JOGOS_GRUPOS = [
   // Grupo H
   { id: 'H1', grupo: 'H', rodada: 1, data: '15/06', cidade: 'Miami', casa: 'es', fora: 'cv', golsCasa: 0, golsFora: 0 },
   { id: 'H2', grupo: 'H', rodada: 1, data: '15/06', cidade: 'Dallas', casa: 'sa', fora: 'uy', golsCasa: 1, golsFora: 1 },
-  { id: 'H3', grupo: 'H', rodada: 2, data: '21/06', cidade: 'Atlanta', casa: 'es', fora: 'sa', golsCasa: null, golsFora: null },
-  { id: 'H4', grupo: 'H', rodada: 2, data: '21/06', cidade: 'Miami', casa: 'uy', fora: 'cv', golsCasa: null, golsFora: null },
+  { id: 'H3', grupo: 'H', rodada: 2, data: '21/06', cidade: 'Atlanta', casa: 'es', fora: 'sa', golsCasa: 4, golsFora: 0 },
+  { id: 'H4', grupo: 'H', rodada: 2, data: '21/06', cidade: 'Miami', casa: 'uy', fora: 'cv', golsCasa: 2, golsFora: 2 },
   { id: 'H5', grupo: 'H', rodada: 3, data: '26/06', cidade: 'Houston', casa: 'cv', fora: 'sa', golsCasa: null, golsFora: null },
   { id: 'H6', grupo: 'H', rodada: 3, data: '26/06', cidade: 'Guadalajara', casa: 'uy', fora: 'es', golsCasa: null, golsFora: null },
 
