@@ -27,7 +27,7 @@ function estadoPadrao() {
   return {
     palpitesGrupos: {}, // { idDoJogo: { golsCasa, golsFora } }
     faseGruposConfirmada: false,
-    palpitesMataMata: {}, // { idDoJogo: { golsA, golsB, penA, penB } }
+    palpitesMataMata: {}, // { idDoJogo: { vencedor: 'A' | 'B' } }
     ultimoCampeaoMostrado: null,
   };
 }
@@ -74,8 +74,8 @@ export function voltarParaFaseDeGrupos() {
   salvar();
 }
 
-export function definirPalpiteMataMata(idDoJogo, golsA, golsB, penA = null, penB = null) {
-  estado.palpitesMataMata[idDoJogo] = { golsA, golsB, penA, penB };
+export function definirPalpiteMataMata(idDoJogo, vencedor) {
+  estado.palpitesMataMata[idDoJogo] = { vencedor };
   limparDependentes(idDoJogo);
   salvar();
 }

@@ -45,20 +45,20 @@ const gruposUsadosNosTercos = Object.values(chaveamento.atribuicaoTerceiros);
 verificar('Cada melhor terceiro foi usado em exatamente uma vaga', gruposUsadosNosTercos.length === 8
   && new Set(gruposUsadosNosTercos).size === 8);
 
-// 3) Resolve a fase de 32 inteira com placares simulados (com pênáltis num
-// empate) e confere se a final fecha corretamente.
+// 3) Resolve a fase de 32 inteira escolhendo o vencedor de cada confronto
+// e confere se a final fecha corretamente.
 const palpites = {};
-chaveamento.fase32.forEach((jogo) => { palpites[jogo.id] = { golsA: 2, golsB: 1 }; });
+chaveamento.fase32.forEach((jogo) => { palpites[jogo.id] = { vencedor: 'A' }; });
 const chaveamento2 = montarChaveamentoCompleto(classificacao, palpites);
 verificar('Todos os vencedores da fase de 32 avançam (timeA)', chaveamento2.fase32.every((j) => j.vencedor === j.timeA));
 verificar('Oitavas de final já têm os dois times definidos', chaveamento2.oitavos.every((j) => j.timeA && j.timeB));
 verificar('Quartas/semis/final ainda não definidos (sem palpite)', chaveamento2.final.timeA === null);
 
-// 4) Testa desempate por pênáltis numa partida do mata-mata.
-const palpitesComPenalti = { ...palpites, M73: { golsA: 1, golsB: 1, penA: 4, penB: 3 } };
-const chaveamento3 = montarChaveamentoCompleto(classificacao, palpitesComPenalti);
+// 4) Testa que escolher o lado B também é respeitado.
+const palpitesComLadoB = { ...palpites, M73: { vencedor: 'B' } };
+const chaveamento3 = montarChaveamentoCompleto(classificacao, palpitesComLadoB);
 const m73 = chaveamento3.fase32.find((j) => j.id === 'M73');
-verificar('Pênáltis decidem o vencedor em caso de empate', m73.vencedor === m73.timeA);
+verificar('Escolher o lado B define o vencedor corretamente', m73.vencedor === m73.timeB);
 
 console.log(`\n${passou} testes passaram, ${falhou} falharam.`);
 if (falhou > 0) process.exit(1);

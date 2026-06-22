@@ -454,27 +454,36 @@ p {
   border-style: dashed;
 }
 
-.area-penaltis {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.linha-penaltis {
+.botao-vencedor {
+  flex: 1;
+  min-width: 0;
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 0.85rem;
+  background: var(--branco);
+  border: 1px solid var(--borda);
+  border-radius: 10px;
+  padding: 8px 10px;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.15s, background-color 0.15s, box-shadow 0.15s;
 }
 
-.rotulo-penaltis {
-  color: var(--texto-apoio);
-  font-size: 0.8rem;
+.botao-vencedor:hover {
+  border-color: var(--azul-principal);
 }
 
-.aviso-penaltis {
-  color: var(--vermelho-aviso);
-  font-size: 0.78rem;
+.botao-vencedor:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(47, 128, 237, 0.18);
+}
+
+.botao-vencedor.selecionado {
+  background: var(--azul-principal);
+  border-color: var(--azul-principal);
+}
+
+.botao-vencedor.selecionado .nome-time {
+  color: var(--branco);
 }
 
 /* Celebração do campeão */
@@ -556,5 +565,170 @@ p {
 
   .titulo-app {
     font-size: 1.4rem;
+  }
+}
+
+/* Visualizar chaveamento (árvore em ramificações) */
+
+.chaveamento-rolagem {
+  overflow-x: auto;
+  padding: 8px 4px 16px;
+}
+
+.chaveamento-arvore {
+  display: flex;
+  align-items: stretch;
+  gap: 24px;
+  min-width: 1100px;
+  height: 600px;
+}
+
+.chaveamento-lado {
+  display: flex;
+  flex: 1;
+  height: 100%;
+}
+
+.chaveamento-lado-direita {
+  flex-direction: row-reverse;
+}
+
+.chaveamento-coluna-fase {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  flex: 1;
+  height: 100%;
+  padding: 0 6px;
+}
+
+.chaveamento-jogo {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--borda);
+  border-radius: 8px;
+  background: var(--branco);
+  overflow: hidden;
+}
+
+.chaveamento-time {
+  display: flex;
+  align-items: center;
+  padding: 4px 8px;
+  border-bottom: 1px solid var(--borda);
+}
+
+.chaveamento-time:last-child {
+  border-bottom: none;
+}
+
+.chaveamento-time-vencedor {
+  background: var(--azul-claro);
+  font-weight: 700;
+}
+
+.chaveamento-time-vencedor .nome-time {
+  color: var(--azul-escuro);
+}
+
+/* Tamanhos progressivos: confrontos compactos nas fases iniciais, crescendo
+   em destaque até a semifinal. */
+
+.chaveamento-coluna-fase[data-fase='fase32'] .nome-time {
+  font-size: 0.68rem;
+}
+
+.chaveamento-coluna-fase[data-fase='fase32'] .bandeira {
+  width: 16px !important;
+  height: 11px !important;
+}
+
+.chaveamento-coluna-fase[data-fase='fase32'] .chaveamento-time {
+  padding: 2px 6px;
+}
+
+.chaveamento-coluna-fase[data-fase='oitavos'] .nome-time {
+  font-size: 0.76rem;
+}
+
+.chaveamento-coluna-fase[data-fase='oitavos'] .chaveamento-time {
+  padding: 3px 7px;
+}
+
+.chaveamento-coluna-fase[data-fase='quartas'] .nome-time {
+  font-size: 0.85rem;
+}
+
+.chaveamento-coluna-fase[data-fase='quartas'] .chaveamento-time {
+  padding: 4px 8px;
+}
+
+.chaveamento-coluna-fase[data-fase='semi'] .nome-time {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.chaveamento-coluna-fase[data-fase='semi'] .chaveamento-time {
+  padding: 6px 10px;
+}
+
+.chaveamento-centro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 220px;
+  flex-shrink: 0;
+}
+
+.chaveamento-rotulo-fase {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--texto-apoio);
+}
+
+.chaveamento-jogo-terceiro {
+  width: 100%;
+  opacity: 0.85;
+}
+
+.chaveamento-jogo-terceiro .nome-time {
+  font-size: 0.78rem;
+}
+
+.chaveamento-jogo-final {
+  width: 100%;
+  border: 2px solid var(--azul-principal);
+  box-shadow: var(--sombra);
+}
+
+.chaveamento-jogo-final .chaveamento-time {
+  padding: 10px 14px;
+}
+
+.chaveamento-jogo-final .nome-time {
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.chaveamento-campeao {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.chaveamento-campeao .time {
+  flex-direction: column;
+  text-align: center;
+}
+
+@media (max-width: 760px) {
+  .chaveamento-arvore {
+    height: 520px;
   }
 }

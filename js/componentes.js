@@ -40,6 +40,13 @@ export function blocoPlaceholder(texto) {
   ]);
 }
 
+export function botaoVencedor(idTime, selecionado, aoClicar, tamanho = 36) {
+  const classe = `botao-vencedor${selecionado ? ' selecionado' : ''}`;
+  return criar('button', { type: 'button', class: classe, onclick: aoClicar }, [
+    blocoTime(idTime, tamanho),
+  ]);
+}
+
 export function descricaoMelhorTerceiro(grupos) {
   return `Melhor 3º colocado entre os grupos ${grupos.join(', ')}`;
 }

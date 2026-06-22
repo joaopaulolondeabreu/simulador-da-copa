@@ -4,7 +4,7 @@ import {
 } from './estado.js';
 import { obterTodosJogosGruposComPalpites } from './jogos.js';
 import { calcularClassificacaoGeral, montarChaveamentoCompleto } from './chaveamento.js';
-import { criar, blocoTime, blocoPlaceholder, inputPlacar } from './componentes.js';
+import { criar, blocoPlaceholder, botaoVencedor } from './componentes.js';
 import { mostrarCelebracaoCampeao } from './celebracao.js';
 
 export function renderizarMataMata(container, aoMudar) {
@@ -15,7 +15,7 @@ export function renderizarMataMata(container, aoMudar) {
 
   container.appendChild(criar('div', { class: 'cabecalho-secao' }, [
     criar('h2', { texto: 'Chaveamento mata-mata' }),
-    criar('p', { class: 'texto-apoio', texto: 'Esses confrontos seguem o chaveamento oficial definido pela FIFA. Escolha o placar de cada fase para liberar a próxima — em caso de empate no mata-mata, defina os pênáltis.' }),
+    criar('p', { class: 'texto-apoio', texto: 'Esses confrontos seguem o chaveamento oficial definido pela FIFA. Escolha o vencedor de cada confronto para liberar a próxima fase.' }),
     criar('div', { class: 'linha-botoes' }, [
       criar('button', {
         class: 'botao-texto',
@@ -70,97 +70,28 @@ function criarCartaoMataMata(resultado, aoMudar, opcoes = {}) {
     criar('span', { class: 'jogo-cidade', texto: resultado.cidade }),
   ]));
 
-  const ladoA = resultado.timeA ? blocoTime(resultado.timeA) : blocoPlaceholder('A definir');
-  const ladoB = resultado.timeB ? blocoTime(resultado.timeB) : blocoPlaceholder('A definir');
-
   if (!resultado.timeA || !resultado.timeB) {
     cartao.appendChild(criar('div', { class: 'jogo-confronto' }, [
-      ladoA,
+      blocoPlaceholder('A definir'),
       criar('span', { class: 'x x-desabilitado', texto: '×' }),
-      ladoB,
+      blocoPlaceholder('A definir'),
     ]));
     return cartao;
   }
 
-  const inputGolsA = inputPlacar(resultado.golsA);
-  const inputGolsB = inputPlacar(resultado.golsB);
-  const areaPenaltis = criar('div', { class: 'area-penaltis' });
-
-  function salvar() {
-    const a = inputGolsA.value === '' ? null : parseInt(inputGolsA.value, 10);
-    const b = inputGolsB.value === '' ? null : parseInt(inputGolsB.value, 10);
-    const valido = (v) => Number.isInteger(v) && v >= 0;
-    if (!valido(a) || !valido(b)) {
-      // Só limpa/reconstrói se já havia um palpite salvo: evita apagar o
-      // primeiro placar digitado quando o usuário ainda está preenchendo
-      // o segundo campo (o 'change' do primeiro dispara antes do segundo).
-      if (resultado.golsA != null || resultado.golsB != null) {
-        definirPalpiteMataMata(resultado.id, null, null, null, null);
-        aoMudar();
-      }
-      return;
-    }
-    if (a === b) {
-      montarPenaltis(a, b);
-      return;
-    }
-    definirPalpiteMataMata(resultado.id, a, b, null, null);
+  function escolher(lado) {
+    definirPalpiteMataMata(resultado.id, lado);
     aoMudar();
   }
 
-  function montarPenaltis(a, b) {
-    areaPenaltis.innerHTML = '';
-    const penAtual = resultado.penA != null ? resultado : null;
-    const inputPenA = inputPlacar(penAtual ? resultado.penA : null);
-    const inputPenB = inputPlacar(penAtual ? resultado.penB : null);
-    const aviso = criar('span', { class: 'aviso-penaltis', texto: '' });
-
-    function salvarPenaltis() {
-      const pa = inputPenA.value === '' ? null : parseInt(inputPenA.value, 10);
-      const pb = inputPenB.value === '' ? null : parseInt(inputPenB.value, 10);
-      const valido = (v) => Number.isInteger(v) && v >= 0;
-      if (!valido(pa) || !valido(pb)) {
-        aviso.textContent = '';
-        if (resultado.penA != null || resultado.penB != null) {
-          definirPalpiteMataMata(resultado.id, a, b, null, null);
-          aoMudar();
-        }
-        return;
-      }
-      if (pa === pb) {
-        aviso.textContent = 'Os pênáltis não podem terminar empatados.';
-        definirPalpiteMataMata(resultado.id, a, b, null, null);
-        return;
-      }
-      aviso.textContent = '';
-      definirPalpiteMataMata(resultado.id, a, b, pa, pb);
-      aoMudar();
-    }
-    inputPenA.addEventListener('change', salvarPenaltis);
-    inputPenB.addEventListener('change', salvarPenaltis);
-
-    areaPenaltis.appendChild(criar('div', { class: 'linha-penaltis' }, [
-      criar('span', { class: 'rotulo-penaltis', texto: 'Empate — pênáltis:' }),
-      inputPenA,
-      criar('span', { class: 'x', texto: '×' }),
-      inputPenB,
-    ]));
-    areaPenaltis.appendChild(aviso);
-  }
-
-  inputGolsA.addEventListener('change', salvar);
-  inputGolsB.addEventListener('change', salvar);
+  const botaoA = botaoVencedor(resultado.timeA, resultado.escolha === 'A', () => escolher('A'));
+  const botaoB = botaoVencedor(resultado.timeB, resultado.escolha === 'B', () => escolher('B'));
 
   cartao.appendChild(criar('div', { class: 'jogo-confronto' }, [
-    ladoA,
-    criar('div', { class: 'placar placar-editavel' }, [inputGolsA, criar('span', { class: 'x', texto: '×' }), inputGolsB]),
-    ladoB,
+    botaoA,
+    criar('span', { class: 'x', texto: '×' }),
+    botaoB,
   ]));
-  cartao.appendChild(areaPenaltis);
-
-  if (resultado.golsA != null && resultado.golsA === resultado.golsB) {
-    montarPenaltis(resultado.golsA, resultado.golsB);
-  }
 
   return cartao;
 }

@@ -79,11 +79,8 @@ function resolverLadoGrupo(lado, classificacao, atribuicaoTerceiros, idDoJogo) {
 }
 
 function definirVencedor(resultado) {
-  if (resultado.golsA == null || resultado.golsB == null) return null;
-  if (resultado.golsA > resultado.golsB) return resultado.timeA;
-  if (resultado.golsB > resultado.golsA) return resultado.timeB;
-  if (resultado.penA == null || resultado.penB == null || resultado.penA === resultado.penB) return null;
-  return resultado.penA > resultado.penB ? resultado.timeA : resultado.timeB;
+  if (!resultado.escolha) return null;
+  return resultado.escolha === 'A' ? resultado.timeA : resultado.timeB;
 }
 
 function definirPerdedor(resultado, vencedor) {
@@ -114,10 +111,7 @@ export function montarChaveamentoCompleto(classificacao, palpitesMataMata) {
       cidade: jogo.cidade,
       timeA,
       timeB,
-      golsA: timeA && timeB ? (palpite.golsA ?? null) : null,
-      golsB: timeA && timeB ? (palpite.golsB ?? null) : null,
-      penA: timeA && timeB ? (palpite.penA ?? null) : null,
-      penB: timeA && timeB ? (palpite.penB ?? null) : null,
+      escolha: timeA && timeB ? (palpite.vencedor ?? null) : null,
     };
     resultado.vencedor = definirVencedor(resultado);
     resultado.perdedor = definirPerdedor(resultado, resultado.vencedor);
