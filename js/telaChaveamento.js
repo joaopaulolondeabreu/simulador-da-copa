@@ -1,4 +1,3 @@
-import { FASES_MATA_MATA } from './dados/mataMata.js';
 import { getEstado } from './estado.js';
 import { obterTodosJogosGruposComPalpites } from './jogos.js';
 import { calcularClassificacaoGeral, montarChaveamentoCompleto } from './chaveamento.js';

@@ -1,0 +1,50 @@
+# Atualiza automaticamente os placares da fase de grupos, lendo o placar
+# que aparece na caixa de resultados do Google para cada jogo do dia.
+# Gratuito, sem chave de API: roda no Actions e usa o GITHUB_TOKEN padrão
+# para fazer commit quando encontra um placar novo. Não exige nenhuma
+# ação manual além de, opcionalmente, disparar manualmente em "Actions".
+name: Atualizar resultados automaticamente
+
+on:
+  schedule:
+    # A cada 5 minutos. O GitHub Actions pode atrasar um pouco em
+    # horários de pico, mas isso é o mais próximo possível de "ao vivo"
+    # sem pagar por uma API.
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: "atualizar-resultados"
+  cancel-in-progress: false
+
+jobs:
+  atualizar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar o repositório (branch main)
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Buscar placares no Google e atualizar jogosGrupos.js
+        run: node scripts/atualizar-resultados.mjs
+
+      - name: Commitar e enviar alterações (se houver)
+        run: |
+          if git diff --quiet -- js/dados/jogosGrupos.js; then
+            echo "Nenhuma mudança de placar."
+            exit 0
+          fi
+          git config user.name "robo-atualizador"
+          git config user.email "actions@github.com"
+          git add js/dados/jogosGrupos.js
+          git commit -m "Atualiza placares da fase de grupos automaticamente"
+          git push
